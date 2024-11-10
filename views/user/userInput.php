@@ -15,13 +15,13 @@
 
     <!-- Main container -->
     <div class="flex">
-       
+
 
         <!-- Main Content -->
-        <div class="flex-1 p-8">
+        <div class="flex-1 p-20">
             <!-- Formulir Input User -->
-            <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
-                <h2 class="text-2xl font-bold mb-6 text-gray-800">Input User</h2>
+            <div class="max-w-md mx-auto bg-gradient-to-br from-white to-gray-100 p-8 rounded-2xl shadow-xl">
+                <h2 class="text-xl font-bold mb-6 text-gray-800 text-center" style="font-family: 'Poppins', sans-serif;">Input Roles</h2>
                 <form action="index.php?modul=user&fitur=add" method="POST">
                     <!-- Username -->
                     <div class="mb-4">
@@ -48,8 +48,8 @@
                         </div>
 
                         <!-- Submit Button -->
-                        <div class="flex items-center justify-between">
-                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-200 ease-in-out">
+                        <div class="flex justify-center mt-6">
+                            <button type="submit" class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 shadow-lg hover:shadow-2xl transform hover:scale-105">
                                 Submit
                             </button>
                         </div>

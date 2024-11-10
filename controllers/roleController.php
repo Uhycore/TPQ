@@ -23,9 +23,9 @@ class RoleController
         $this->roleModel->addRole($roleNama, $roleDeskripsi, $roleStatus);
         header('location: index.php?modul=null');
     }
-    public function editById($role_id)
+    public function editById($roleId)
     {
-        $objRoles = $this->roleModel->getRoleById($role_id);
+        $objRoles = $this->roleModel->getRoleById($roleId);
         include 'views/role/roleUpdate.php';
     }
 

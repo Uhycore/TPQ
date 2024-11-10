@@ -58,7 +58,7 @@
                                             </span>
                                         </td>
                                         <td class=" py-4 px-6 flex justify-center space-x-2 border-gray-300">
-                                            <form action="index.php?modul=role&fitur=edit&userId=<?= $user->userId ?>" method="POST" class="inline">
+                                            <form action="index.php?modul=user&fitur=edit&userId=<?= $user->userId ?>" method="POST" class="inline">
                                                 <button type="submit" class="bg-transparent hover:bg-gray-200 p-1 rounded-lg transition-all duration-200 ease-in-out transform hover:scale-110">
                                                     <i class="fas fa-edit text-green-500 hover:text-green-700 w-4 h-4"></i>
                                                 </button>

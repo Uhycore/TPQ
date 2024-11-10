@@ -1,0 +1,38 @@
+[
+    {
+        "roleId": 1,
+        "roleNama": "Admin",
+        "roleDeskripsi": "Sebagai pengatur semuanya",
+        "roleStatus": 1
+    },
+    {
+        "roleId": 2,
+        "roleNama": "Uztad\/Uztadzah",
+        "roleDeskripsi": "Bagian menginputkan data",
+        "roleStatus": 1
+    },
+    {
+        "roleId": 3,
+        "roleNama": "Santri",
+        "roleDeskripsi": "Santri\/Orang tua santri yang memiliki akun",
+        "roleStatus": 1
+    },
+    {
+        "roleId": 4,
+        "roleNama": "Bendahara",
+        "roleDeskripsi": "Menginputkan data keuangan",
+        "roleStatus": 1
+    },
+    {
+        "roleId": 5,
+        "roleNama": "111",
+        "roleDeskripsi": "111",
+        "roleStatus": "0"
+    },
+    {
+        "roleId": 6,
+        "roleNama": null,
+        "roleDeskripsi": null,
+        "roleStatus": null
+    }
+]

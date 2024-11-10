@@ -17,7 +17,7 @@
 
                 <!-- Nama Aplikasi -->
                 <div class="text-blue-600 font-bold text-2xl tracking-wide">
-                    My Application
+                    Aplikasi
                 </div>
             </div>
 
@@ -26,12 +26,12 @@
             <div class="flex items-center space-x-6">
                 <div class="relative">
                     <!-- Profil dengan Hover -->
-                    <img src="assets/profil.jpg" alt="Profil" class="w-12 h-12 rounded-full border-2 border-gray-300 transition-transform transform hover:scale-110 hover:shadow-2xl object-cover">
+                    <img src="assets/profil.jpg" alt="Profil" class="w-12 h-12 rounded-full border-2 border-blue-600 shadow-lg hover:shadow-300 transition-transform transform hover:scale-110 hover:shadow-2xl object-cover">
                 </div>
 
                 <!-- Nama User -->
                 <div class="text-gray-800 font-semibold text-sm">
-                    aril
+                    Uhycore
                 </div>
 
                 <!-- Tombol Logout dengan animasi modern -->

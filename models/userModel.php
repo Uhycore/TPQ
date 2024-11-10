@@ -7,16 +7,21 @@ class UserModel
     private $users = [];
     private $nextId = 1;
     private $roleModel;
+    private $jsonFilePath = 'data/users.json'; 
 
     public function __construct()
     {
         $this->roleModel = new RoleModel();
 
-        if (isset($_SESSION['users'])) {
+        if (file_exists($this->jsonFilePath)) {
+            $this->loadFromJsonFile();
+            $this->nextId = $this->getMaxUserId() + 1;
+        } elseif (isset($_SESSION['users'])) {
             $this->users = unserialize($_SESSION['users']);
-            $this->nextId = $this->getMaxRoleId() + 1;
+            $this->nextId = $this->getMaxUserId() + 1;
         } else {
             $this->initializeDefaultUser();
+            $this->saveToJsonFile(); 
         }
     }
 
@@ -24,10 +29,7 @@ class UserModel
     {
         $this->addUser('Staf It', '1', 1);
         $this->addUser('Staf Pengajar', '1', 2);
-        $this->addUser('Aril', '1', 3);
-        $this->addUser('Aril Mubin', '1', 3);
-        $this->addUser('Mubin', '1', 3);
-        $this->addUser('Asyraril', '1', 3);
+        $this->addUser('Santri', '1', 3);
         $this->addUser('Staf Keuangan', '1', 4);
     }
 
@@ -41,6 +43,7 @@ class UserModel
         $user = new User($this->nextId++, $username, $password, $role);
         $this->users[] = $user;
         $this->saveToSession();
+        $this->saveToJsonFile();
     }
 
     private function saveToSession()
@@ -48,10 +51,37 @@ class UserModel
         $_SESSION['users'] = serialize($this->users);
     }
 
+    private function saveToJsonFile()
+    {
+        $userData = array_map(function ($user) {
+            return [
+                'userId' => $user->userId,
+                'username' => $user->username,
+                'password' => $user->password,
+                'role' => $user->role,
+            ];
+        }, $this->users);
+
+        file_put_contents($this->jsonFilePath, json_encode($userData, JSON_PRETTY_PRINT));
+    }
+
+    private function loadFromJsonFile()
+    {
+        $userData = json_decode(file_get_contents($this->jsonFilePath), true);
+        if (is_array($userData)) {
+            foreach ($userData as $data) {
+                $role = $this->roleModel->getRoleById($data['role']['roleId']);
+                $user = new User($data['userId'],  $data['username'], $data['password'], $role);
+                $this->users[] = $user;
+            }
+        }
+    }
+
     public function getAllUsers()
     {
         return $this->users;
     }
+
     public function getUserById($userId)
     {
         foreach ($this->users as $user) {
@@ -72,41 +102,39 @@ class UserModel
         return null;
     }
 
-
-
-    public function updateUser($userId, $username, $password, $role)
+    public function updateUser($userId, $username, $password, $roleId)
     {
         foreach ($this->users as $user) {
             if ($user->userId == $userId) {
                 $user->username = $username;
                 $user->password = $password;
 
-                $role = $this->roleModel->getRoleByName($role);
-
+                $role = $this->roleModel->getRoleById($roleId);
                 $user->role = $role;
 
-
                 $this->saveToSession();
+                $this->saveToJsonFile();
                 return true;
             }
         }
         return false;
     }
-
 
     public function deleteUser($userId)
     {
         foreach ($this->users as $key => $user) {
             if ($user->userId == $userId) {
                 unset($this->users[$key]);
-                $this->users = array_values($this->users); // Reindex array
+                $this->users = array_values($this->users); 
                 $this->saveToSession();
+                $this->saveToJsonFile();
                 return true;
             }
         }
         return false;
     }
-    private function getMaxRoleId()
+
+    public function getMaxUserId()
     {
         $maxId = 0;
         foreach ($this->users as $user) {

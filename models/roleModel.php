@@ -5,39 +5,68 @@ class RoleModel
 {
     private $roles = [];
     private $nextId = 1;
-
+    private $jsonFilePath = 'data/roles.json';
 
     public function __construct()
     {
-        if (isset($_SESSION['roles'])) {
+
+        if (file_exists($this->jsonFilePath)) {
+            $this->loadFromJsonFile();
+            $this->nextId = $this->getMaxRoleId() + 1;
+        } elseif (isset($_SESSION['roles'])) {
             $this->roles = unserialize($_SESSION['roles']);
-
-
             $this->nextId = $this->getMaxRoleId() + 1;
         } else {
-
             $this->initializeDefaultRole();
+            $this->saveToJsonFile();
         }
     }
+
 
     public function initializeDefaultRole()
     {
         $this->addRole("Admin", "Sebagai pengatur semuanya", 1);
-        $this->addRole("Uztad/Uztadzah", "bagian menginputkan data", 1);
-        $this->addRole("User", "Santri/Orang tua santri yang memiliki akun", 1);
-        $this->addRole("Bendahara", "menginputkan data keuangan", 1);
+        $this->addRole("Uztad/Uztadzah", "Bagian menginputkan data", 1);
+        $this->addRole("Santri", "Santri/Orang tua santri yang memiliki akun", 1);
+        $this->addRole("Bendahara", "Menginputkan data keuangan", 1);
     }
 
     public function addRole($roleNama, $roleDeskripsi, $roleStatus)
     {
-        $role = new role($this->nextId++, $roleNama, $roleDeskripsi, $roleStatus);
+        $role = new Role($this->nextId++, $roleNama, $roleDeskripsi, $roleStatus);
         $this->roles[] = $role;
         $this->saveToSession();
+        $this->saveToJsonFile();
     }
 
     private function saveToSession()
     {
         $_SESSION['roles'] = serialize($this->roles);
+    }
+
+
+    private function saveToJsonFile()
+    {
+        $rolesArray = array_map(function ($role) {
+            return [
+                'roleId' => $role->roleId,
+                'roleNama' => $role->roleNama,
+                'roleDeskripsi' => $role->roleDeskripsi,
+                'roleStatus' => $role->roleStatus
+            ];
+        }, $this->roles);
+
+        file_put_contents($this->jsonFilePath, json_encode($rolesArray, JSON_PRETTY_PRINT));
+    }
+
+    private function loadFromJsonFile()
+    {
+        $data = json_decode(file_get_contents($this->jsonFilePath), true);
+        if ($data) {
+            $this->roles = array_map(function ($item) {
+                return new Role($item['roleId'], $item['roleNama'], $item['roleDeskripsi'], $item['roleStatus']);
+            }, $data);
+        }
     }
 
     public function getAllRoles()
@@ -59,11 +88,11 @@ class RoleModel
     {
         foreach ($this->roles as $role) {
             if ($role->roleId == $roleId) {
-
                 $role->roleNama = $roleNama;
                 $role->roleDeskripsi = $roleDeskripsi;
                 $role->roleStatus = $roleStatus;
                 $this->saveToSession();
+                $this->saveToJsonFile();
                 return true;
             }
         }
@@ -75,8 +104,9 @@ class RoleModel
         foreach ($this->roles as $key => $role) {
             if ($role->roleId == $roleId) {
                 unset($this->roles[$key]);
-                $this->roles = array_values($this->roles); // Reindex array
+                $this->roles = array_values($this->roles); 
                 $this->saveToSession();
+                $this->saveToJsonFile();
                 return true;
             }
         }
