@@ -7,7 +7,7 @@ class NilaiNode
     public $santri;
     public $detailNilai;
 
-    public function __construct($nilaiId, $santri, $detailNilai)
+    public function __construct($nilaiId, $santri)
     {
         $this->nilaiId = $nilaiId;
         $this->santri = $santri;

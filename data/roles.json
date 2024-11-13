@@ -22,17 +22,5 @@
         "roleNama": "Bendahara",
         "roleDeskripsi": "Menginputkan data keuangan",
         "roleStatus": 1
-    },
-    {
-        "roleId": 5,
-        "roleNama": "111",
-        "roleDeskripsi": "111",
-        "roleStatus": "0"
-    },
-    {
-        "roleId": 6,
-        "roleNama": null,
-        "roleDeskripsi": null,
-        "roleStatus": null
     }
 ]

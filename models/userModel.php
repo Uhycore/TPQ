@@ -7,7 +7,7 @@ class UserModel
     private $users = [];
     private $nextId = 1;
     private $roleModel;
-    private $jsonFilePath = 'data/users.json'; 
+    private $jsonFilePath = 'data/users.json';
 
     public function __construct()
     {
@@ -21,7 +21,7 @@ class UserModel
             $this->nextId = $this->getMaxUserId() + 1;
         } else {
             $this->initializeDefaultUser();
-            $this->saveToJsonFile(); 
+            $this->saveToJsonFile();
         }
     }
 
@@ -125,7 +125,7 @@ class UserModel
         foreach ($this->users as $key => $user) {
             if ($user->userId == $userId) {
                 unset($this->users[$key]);
-                $this->users = array_values($this->users); 
+                $this->users = array_values($this->users);
                 $this->saveToSession();
                 $this->saveToJsonFile();
                 return true;

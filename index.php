@@ -4,6 +4,14 @@ require_once 'controllers/userController.php';
 require_once 'controllers/santriController.php';
 require_once 'controllers/mapelController.php';
 
+require_once 'models/nilaiModel.php';
+require_once 'models/keuanganModel.php';
+
+require_once 'models/mapelModel.php';
+require_once 'models/santriModel.php';
+
+
+
 session_start();
 
 
@@ -14,10 +22,50 @@ $objUsers = new UserController();
 $objSantri = new SantriController();
 $objMapel = new MapelController();
 
+$objNilai = new NilaiModel();
+$objKeuangan = new KeuanganModel();
+
+$obj_mapel = new MapelModel();
+$obj_santri = new SantriModel();
+
+
+
 
 
 
 switch ($modul) {
+    case 'login':
+        $pengguna = $obj_santri->getAllSantris();
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+
+
+            foreach ($pengguna as $user) {
+                if ($user->username == $username && $user->password == $password) {
+                    // Jika username dan password cocok, periksa role
+                    if ($user->role->roleId == 1) {
+                        // Role ID 1 (admin)
+                        $santriId = $user->santriId;
+                        $user = $obj_santri->getSantriById($santriId);
+                        $_SESSION['username_login'] = $user;
+                        include 'views/role/roleDashboard.php';
+                    } else if ($user->role->roleId == 3) {
+                        // Role ID 3 (santri)
+                        $santriId = $user->santriId;
+                        $user = $obj_santri->getSantriById($santriId);
+                        $_SESSION['username_login'] = $user;
+                        include 'views/santri/santriDashboard.php';
+                    }
+                }
+            }
+        }
+        break;
+    case 'logout':
+        unset($_SESSION['username_login']);
+        include 'views/items/login.php';
+        break;
     case 'role':
         $fitur = isset($_GET['fitur']) ? $_GET['fitur'] : null;
 
@@ -54,6 +102,9 @@ switch ($modul) {
                 $roleStatus = $_POST['roleStatus'];
 
                 $objRoles->updateRole($roleId, $roleName, $roelDeskripsi, $roleStatus);
+                break;
+            default:
+                $objRoles->listRoles();
                 break;
         }
         break;
@@ -173,8 +224,102 @@ switch ($modul) {
                 break;
         }
         break;
-    default:
+    case 'nilai':
+        $fitur = isset($_GET['fitur']) ? $_GET['fitur'] : null;
 
-        include 'views/role/roleDashboard.php';
+        switch ($fitur) {
+            case 'input':
+                $santris = $obj_santri->getAllSantris();
+                $mapels = $obj_mapel->getAllmapels();
+
+                include 'views/items/nilaiInput.php';
+                break;
+
+            case 'add':
+                $santriId = $_POST['santriId'];
+                $mapelId = $_POST['mapelId'];
+                $nilais = $_POST['nilai'];
+
+                $detail_nilai_data = [];
+                $counter = 1;
+                foreach ($mapelId as $key => $mapel_id) {
+                    $mapel = $obj_mapel->getMapelById($mapel_id);
+
+                    if ($mapel) {
+                        $detailNilaiNode = new DetailNilaiNode($counter++, $mapel, $nilais[$key]);
+                        $detail_nilai_data[] = $detailNilaiNode;
+                    }
+                }
+
+
+                if (!empty($detail_nilai_data)) {
+                    $objNilai->addNilai($santriId, $detail_nilai_data);
+                    header("Location: index.php?modul=nilai");
+                } else {
+                    echo "Detail nilai tidak lengkap!";
+                    exit;
+                }
+                break;
+
+
+            default:
+                $nilaiNodes = $objNilai->getAllNilai();
+                // echo "<pre>";
+                // print_r($nilaiNodes);
+                // echo "</pre>";
+                include 'views/items/nilaiList.php';
+                break;
+        }
+        break;
+    case 'keuangan':
+        $fitur = isset($_GET['fitur']) ? $_GET['fitur'] : null;
+
+        switch ($fitur) {
+            case 'input':
+                $santris = $obj_santri->getAllSantris();
+                include 'views/items/keuanganInput.php';
+                break;
+
+            case 'add':
+
+                $santriId = $_POST['santriId'];
+                $tanggal = $_POST['tanggal'];
+                $nominal = $_POST['nominal'];
+
+
+                $detailKeuanganData = [];
+                $counter = 1;
+
+                $detailKeuanganNode = new DetailKeuanganNode($counter++, $tanggal, $nominal);
+
+
+                $detailKeuanganData[] = $detailKeuanganNode;
+
+
+
+                $tes = $objKeuangan->addKeuangan($santriId, $detailKeuanganData);
+
+
+                header("Location: index.php?modul=keuangan");
+                break;
+
+
+
+
+            default:
+                $keuanganNodes = $objKeuangan->getAllKeuangan();
+
+                include 'views/items/keuanganList.php';
+        }
+        break;
+
+
+    default:
+        if (isset($_SESSION['username_login']) && $_SESSION['username_login']->role->roleId == 3) {
+            include 'views/santri/santriDashboard.php';
+        } else if (isset($_SESSION['username_login']) && $_SESSION['username_login']->role->roleId == 1) {
+            include 'views/role/roleDashboard.php';
+        }
+        include 'views/items/login.php';
         break;
 }

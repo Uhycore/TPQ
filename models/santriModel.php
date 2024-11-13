@@ -29,15 +29,15 @@ class SantriModel
 
     public function initializeDefaultUser()
     {
-        $this->addSantri('Aril', '1',  'Laki-laki', 'Jakarta', 'Jl. Raya Jakarta', 'Aril', '0123456789', '1000000');
-        $this->addSantri('Aril Mubin', '1',  'Laki-laki', 'Jakarta', 'Jl. Raya Jakarta', 'Aril', '0123456789', '1000000');
-        $this->addSantri('Mubin', '1',  'Laki-laki', 'Jakarta', 'Jl. Raya Jakarta', 'Aril', '0123456789', '1000000');
-        $this->addSantri('Asyraril', '1', 'Laki-laki', 'Jakarta', 'Jl. Raya Jakarta', 'Aril', '0123456789', '1000000');
+        $this->addSantri('Aril', '1', 1,  'Laki-laki', 'Jakarta', 'Jl. Raya Jakarta', 'Aril', '0123456789', '1000000');
+        $this->addSantri('Aril Mubin', 3, '1',  'Laki-laki', 'Jakarta', 'Jl. Raya Jakarta', 'Aril', '0123456789', '1000000');
+        $this->addSantri('Mubin', '1', 3,  'Laki-laki', 'Jakarta', 'Jl. Raya Jakarta', 'Aril', '0123456789', '1000000');
+        $this->addSantri('Asyraril', '1', 3, 'Laki-laki', 'Jakarta', 'Jl. Raya Jakarta', 'Aril', '0123456789', '1000000');
     }
 
-    public function addSantri($username, $password, $santriJenisKelamin, $santriTempatTglLahir, $santriAlamat, $santriNamaOrtu, $santriNoTelpOrtu, $santriGajiOrtu)
+    public function addSantri($username, $password, $role, $santriJenisKelamin, $santriTempatTglLahir, $santriAlamat, $santriNamaOrtu, $santriNoTelpOrtu, $santriGajiOrtu)
     {
-        $role = $this->roleModel->getRoleById(3);
+        $role = $this->roleModel->getRoleById($role);
         $santri = new Santri(3, $username, $password, $role, $this->nextIdSantri++, $santriJenisKelamin, $santriTempatTglLahir, $santriAlamat, $santriNamaOrtu, $santriNoTelpOrtu, $santriGajiOrtu);
         $this->santris[] = $santri;
         $this->saveToSession();
@@ -130,7 +130,7 @@ class SantriModel
         $index = array_search($santri, $this->santris);
         if ($index !== false) {
             unset($this->santris[$index]);
-            $this->santris = array_values($this->santris); 
+            $this->santris = array_values($this->santris);
             $this->saveToSession();
             $this->saveToJsonFile();
         }

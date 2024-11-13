@@ -11,6 +11,7 @@
             <!-- Logo / Nama Aplikasi -->
             <div class="flex items-center space-x-3">
                 <!-- Ikon Home -->
+
                 <a href="index.php?modul=null">
                     <i class="fas fa-home text-2xl text-blue-600 transition-transform transform hover:scale-110"></i>
                 </a>
@@ -31,11 +32,16 @@
 
                 <!-- Nama User -->
                 <div class="text-gray-800 font-semibold text-sm">
-                    Uhycore
+                    <?php echo $_SESSION['username_login']->username; ?>
+                </div>
+                <!-- Nama role User -->
+                <div class="text-gray-800 font-semibold text-sm">
+                    <?php echo $_SESSION['username_login']->role->roleNama; ?>
                 </div>
 
                 <!-- Tombol Logout dengan animasi modern -->
                 <a href="index.php?modul=logout">
+                    
                     <button class="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-indigo-600 hover:to-blue-500 text-white font-medium py-2 px-6 rounded-full transition-all duration-300 shadow-lg hover:shadow-2xl transform hover:scale-105">
                         Logout
                     </button>

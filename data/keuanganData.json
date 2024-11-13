@@ -1,0 +1,58 @@
+[
+    {
+        "keuanganId": 1,
+        "santri": {
+            "userId": 3,
+            "username": "Aril",
+            "password": "1",
+            "role": {
+                "roleId": 1,
+                "roleNama": "Admin",
+                "roleDeskripsi": "Sebagai pengatur semuanya",
+                "roleStatus": 1
+            },
+            "santriId": 1,
+            "santriJenisKelamin": "Laki-laki",
+            "santriTempatTglLahir": "Jakarta",
+            "santriAlamat": "Jl. Raya Jakarta",
+            "santriNamaOrtu": "Aril",
+            "santriNoTelpOrtu": "0123456789",
+            "santriGajiOrtu": "1000000"
+        },
+        "detailKeuangan": [
+            {
+                "detailKeuanganId": 1,
+                "tanggal": "2024-11-10",
+                "nominal": "10000"
+            }
+        ]
+    },
+    {
+        "keuanganId": 2,
+        "santri": {
+            "userId": 3,
+            "username": "Aril",
+            "password": "1",
+            "role": {
+                "roleId": 1,
+                "roleNama": "Admin",
+                "roleDeskripsi": "Sebagai pengatur semuanya",
+                "roleStatus": 1
+            },
+            "santriId": 1,
+            "santriJenisKelamin": "Laki-laki",
+            "santriTempatTglLahir": "Jakarta",
+            "santriAlamat": "Jl. Raya Jakarta",
+            "santriNamaOrtu": "Aril",
+            "santriNoTelpOrtu": "0123456789",
+            "santriGajiOrtu": "1000000"
+        },
+        "detailKeuangan": [
+            {
+                "detailKeuanganId": 1,
+                "tanggal": "2024-11-10",
+                "nominal": "10000"
+            }
+        ]
+    }
+]

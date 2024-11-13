@@ -4,9 +4,9 @@
         "username": "Aril",
         "password": "1",
         "role": {
-            "roleId": 3,
-            "roleNama": "Santri",
-            "roleDeskripsi": "Santri\/Orang tua santri yang memiliki akun",
+            "roleId": 1,
+            "roleNama": "Admin",
+            "roleDeskripsi": "Sebagai pengatur semuanya",
             "roleStatus": 1
         },
         "santriId": 1,
@@ -23,8 +23,8 @@
         "password": "1",
         "role": {
             "roleId": 3,
-            "roleNama": "Santri",
-            "roleDeskripsi": "Santri\/Orang tua santri yang memiliki akun",
+            "roleNama": "Admin",
+            "roleDeskripsi": "Sebagai pengatur semuanya",
             "roleStatus": 1
         },
         "santriId": 2,
@@ -41,8 +41,8 @@
         "password": "1",
         "role": {
             "roleId": 3,
-            "roleNama": "Santri",
-            "roleDeskripsi": "Santri\/Orang tua santri yang memiliki akun",
+            "roleNama": "Admin",
+            "roleDeskripsi": "Sebagai pengatur semuanya",
             "roleStatus": 1
         },
         "santriId": 3,
@@ -59,8 +59,8 @@
         "password": "1",
         "role": {
             "roleId": 3,
-            "roleNama": "Santri",
-            "roleDeskripsi": "Santri\/Orang tua santri yang memiliki akun",
+            "roleNama": "Admin",
+            "roleDeskripsi": "Sebagai pengatur semuanya",
             "roleStatus": 1
         },
         "santriId": 4,
@@ -70,23 +70,5 @@
         "santriNamaOrtu": "Aril",
         "santriNoTelpOrtu": "0123456789",
         "santriGajiOrtu": "1000000"
-    },
-    {
-        "userId": 3,
-        "username": "mkkn",
-        "password": "1",
-        "role": {
-            "roleId": 3,
-            "roleNama": "Santri",
-            "roleDeskripsi": "Santri\/Orang tua santri yang memiliki akun",
-            "roleStatus": 1
-        },
-        "santriId": 5,
-        "santriJenisKelamin": "Perempuan",
-        "santriTempatTglLahir": "1",
-        "santriAlamat": "1",
-        "santriNamaOrtu": "1",
-        "santriNoTelpOrtu": "1",
-        "santriGajiOrtu": "1"
     }
 ]
