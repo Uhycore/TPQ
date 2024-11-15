@@ -1,14 +1,18 @@
 <?php
 require_once 'controllers/roleController.php';
-require_once 'controllers/userController.php';
+require_once 'controllers/adminController.php';
 require_once 'controllers/santriController.php';
 require_once 'controllers/mapelController.php';
+
 
 require_once 'models/nilaiModel.php';
 require_once 'models/keuanganModel.php';
 
 require_once 'models/mapelModel.php';
 require_once 'models/santriModel.php';
+
+require_once 'models/guruModel.php';
+require_once 'models/adminModel.php';
 
 
 
@@ -18,9 +22,9 @@ session_start();
 $modul = isset($_GET['modul']) ? $_GET['modul'] : null;
 
 $objRoles = new RoleController();
-$objUsers = new UserController();
 $objSantri = new SantriController();
 $objMapel = new MapelController();
+$objAdmin = new AdminController();
 
 $objNilai = new NilaiModel();
 $objKeuangan = new KeuanganModel();
@@ -28,40 +32,56 @@ $objKeuangan = new KeuanganModel();
 $obj_mapel = new MapelModel();
 $obj_santri = new SantriModel();
 
-
-
+$obj_guru = new GuruModel();
+$obj_admin = new AdminModel();
 
 
 
 switch ($modul) {
     case 'login':
-        $pengguna = $obj_santri->getAllSantris();
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $username = $_POST['username'];
-            $password = $_POST['password'];
+            $username = htmlspecialchars($_POST['username']);
+            $password = htmlspecialchars($_POST['password']);
 
+            $santri = $obj_santri->getSantriByUsername($username);
+            $guru = $obj_guru->getGuruByUsername($username);
+            $admin = $obj_admin->getAdminByUsername($username);
 
-            foreach ($pengguna as $user) {
-                if ($user->username == $username && $user->password == $password) {
-                    // Jika username dan password cocok, periksa role
-                    if ($user->role->roleId == 1) {
-                        // Role ID 1 (admin)
-                        $santriId = $user->santriId;
-                        $user = $obj_santri->getSantriById($santriId);
-                        $_SESSION['username_login'] = $user;
-                        include 'views/role/roleDashboard.php';
-                    } else if ($user->role->roleId == 3) {
-                        // Role ID 3 (santri)
-                        $santriId = $user->santriId;
-                        $user = $obj_santri->getSantriById($santriId);
-                        $_SESSION['username_login'] = $user;
-                        include 'views/santri/santriDashboard.php';
-                    }
+            if ($santri) {
+                if ($santri->password == $password && $santri->role->roleId == 3) {
+                    $_SESSION['username_login'] = $santri;
+                    header("Location: index.php?modul=null");
+                    exit();
+                } else {
+                    $error = "Password atau role tidak sesuai.";
                 }
+            } elseif ($guru) {
+                if ($guru->password == $password && $guru->role->roleId == 2) {
+                    $_SESSION['username_login'] = $guru;
+                    header("Location: index.php?modul=null");
+                    exit();
+                } else {
+                    $error = "Password atau role tidak sesuai.";
+                }
+                $error = "Username tidak ditemukan.";
+            } elseif ($admin) {
+                if ($admin->password == $password && $admin->role->roleId == 1) {
+                    $_SESSION['username_login'] = $admin;
+                    header("Location: index.php?modul=null");
+                    exit();
+                } else {
+                    $error = "Password atau role tidak sesuai.";
+                }
+                $error = "Username tidak ditemukan.";
+            } else {
+                $error = "Username tidak ditemukan.";
             }
+
+            include 'views/items/login.php';
         }
         break;
+
+
     case 'logout':
         unset($_SESSION['username_login']);
         include 'views/items/login.php';
@@ -72,81 +92,54 @@ switch ($modul) {
         switch ($fitur) {
             case 'list':
                 $objRoles->listRoles();
-
                 break;
             case 'input':
                 include 'views/role/roleInput.php';
                 break;
             case 'add':
-                $roleName = $_POST['roleNama'];
-                $roelDeskripsi = $_POST['roleDeskripsi'];
-                $roleStatus = $_POST['roleStatus'];
-
-                $objRoles->addRole($roleName, $roelDeskripsi, $roleStatus);
-                break;
+                $objRoles->addRole();
             case 'delete':
-                $roleId = $_POST['roleId'];
-
-                $objRoles->deleteRole($roleId);
+                $objRoles->deleteRole();
                 break;
-
             case 'edit':
-                $roleId = $_GET['roleId'];
-
-                $objRoles->editById($roleId);
+                $objRoles->editById();
                 break;
             case 'update':
-                $roleId = $_POST['roleId'];
-                $roleName = $_POST['roleNama'];
-                $roelDeskripsi = $_POST['roleDeskripsi'];
-                $roleStatus = $_POST['roleStatus'];
-
-                $objRoles->updateRole($roleId, $roleName, $roelDeskripsi, $roleStatus);
+                $objRoles->updateRole();
                 break;
             default:
                 $objRoles->listRoles();
                 break;
         }
         break;
-    case 'user':
+    case 'admin':
         $fitur = isset($_GET['fitur']) ? $_GET['fitur'] : null;
 
         switch ($fitur) {
             case 'list':
-                $objUsers->listUsers();
+                $objAdmin->listAdmins();
                 break;
             case 'input':
-                $objUsers->inputUsers();
-
+                include 'views/admin/adminInput.php';
                 break;
             case 'add':
-                $username = $_POST['username'];
-                $password = $_POST['password'];
-                $role = $_POST['role'];
-
-                $objUsers->addUser($username, $password, $role);
+                $objAdmin->addAdmins();
+                break;
+            case 'delete':
+                $objAdmin->deleteAdmins();
                 break;
             case 'edit':
-                $userId = $_GET['userId'];
-
-                $objUsers->editById($userId);
+                $objAdmin->editById();
                 break;
             case 'update':
-                $userId = $_POST['userId'];
-                $username = $_POST['username'];
-                $password = $_POST['password'];
-                $role = $_POST['role'];
-
-                $objUsers->updateUser($userId, $username, $password, $role);
+                $objAdmin->updateAdmins();
                 break;
-
-            case 'delete':
-                $userId = $_POST['userId'];
-
-                $objUsers->deleteUser($userId);
+            default:
+                $objAdmin->listAdmins();
                 break;
         }
         break;
+
     case 'santri':
         $fitur = isset($_GET['fitur']) ? $_GET['fitur'] : null;
 
@@ -167,7 +160,7 @@ switch ($modul) {
                 $santriNoTelpOrtu = $_POST['santriNoTelpOrtu'];
                 $santriGajiOrtu = $_POST['santriGajiOrtu'];
 
-                $objSantri->addSantri($username, $password, $santriJenisKelamin, $santriTempatTglLahir, $santriAlamat, $santriNamaOrtu, $santriNoTelpOrtu, $santriGajiOrtu);
+                $objSantri->addSantri($username, $password, 3, $santriJenisKelamin, $santriTempatTglLahir, $santriAlamat, $santriNamaOrtu, $santriNoTelpOrtu, $santriGajiOrtu);
                 break;
             case 'edit':
                 $santriId = $_GET['santriId'];
@@ -189,6 +182,58 @@ switch ($modul) {
                 break;
         }
         break;
+    case 'guru':
+        $fitur = isset($_GET['fitur']) ? $_GET['fitur'] : null;
+
+        switch ($fitur) {
+            case 'list':
+                $gurus = $obj_guru->getAllGurus();
+
+                include 'views/guru/guruList.php';
+                break;
+
+            case 'input':
+                include 'views/guru/guruInput.php';
+                break;
+
+            case 'add':
+                $username = $_POST['username'];
+                $password = $_POST['password'];
+                $guruJenisKelamin = $_POST['guruJenisKelamin'];
+                $guruTempatTglLahir = $_POST['guruTempatTglLahir'];
+                $guruKelas = $_POST['guruKelas'];
+                $guruAlamat = $_POST['guruAlamat'];
+                $guruNoTelp = $_POST['guruNoTelp'];
+
+                $guruModel->addGuru($username, $password, 2, $guruJenisKelamin, $guruTempatTglLahir, $guruKelas, $guruAlamat, $guruNoTelp);
+
+
+                header('Location: ?guru=fitur&list');
+                break;
+
+            case 'edit':
+                $guruId = $_GET['guruId'];
+
+                include 'views/guru/guruEdit.php';
+                break;
+
+            case 'update':
+                $guruId = $_POST['guruId'];
+                $username = $_POST['username'];
+                $password = $_POST['password'];
+                $guruJenisKelamin = $_POST['guruJenisKelamin'];
+                $guruTempatTglLahir = $_POST['guruTempatTglLahir'];
+                $guruKelas = $_POST['guruKelas'];
+                $guruAlamat = $_POST['guruAlamat'];
+                $guruNoTelp = $_POST['guruNoTelp'];
+
+                $guruModel->updateGuru($username, $password, $guruId, $guruJenisKelamin, $guruTempatTglLahir, $guruKelas, $guruAlamat, $guruNoTelp);
+
+                header('Location: ?guru=fitur&list');
+                break;
+        }
+        break;
+
     case 'mapel':
         $fitur = isset($_GET['fitur']) ? $_GET['fitur'] : null;
 
@@ -317,8 +362,13 @@ switch ($modul) {
     default:
         if (isset($_SESSION['username_login']) && $_SESSION['username_login']->role->roleId == 3) {
             include 'views/santri/santriDashboard.php';
+            break;
+        } else if (isset($_SESSION['username_login']) && $_SESSION['username_login']->role->roleId == 2) {
+            include 'views/role/roleDashboard.php';
+            break;
         } else if (isset($_SESSION['username_login']) && $_SESSION['username_login']->role->roleId == 1) {
             include 'views/role/roleDashboard.php';
+            break;
         }
         include 'views/items/login.php';
         break;

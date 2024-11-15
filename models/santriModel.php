@@ -1,6 +1,5 @@
 <?php
 require_once 'config/santriNode.php';
-require_once 'userModel.php';
 
 class SantriModel
 {
@@ -11,15 +10,10 @@ class SantriModel
 
     public function __construct()
     {
-
-
         $this->roleModel = new RoleModel();
 
         if (file_exists($this->jsonFilePath)) {
             $this->loadFromJsonFile();
-            $this->nextIdSantri = $this->getMaxSantriId() + 1;
-        } elseif (isset($_SESSION['santris'])) {
-            $this->santris = unserialize($_SESSION['santris']);
             $this->nextIdSantri = $this->getMaxSantriId() + 1;
         } else {
             $this->initializeDefaultUser();
@@ -40,13 +34,7 @@ class SantriModel
         $role = $this->roleModel->getRoleById($role);
         $santri = new Santri(3, $username, $password, $role, $this->nextIdSantri++, $santriJenisKelamin, $santriTempatTglLahir, $santriAlamat, $santriNamaOrtu, $santriNoTelpOrtu, $santriGajiOrtu);
         $this->santris[] = $santri;
-        $this->saveToSession();
         $this->saveToJsonFile();
-    }
-
-    private function saveToSession()
-    {
-        $_SESSION['santris'] = serialize($this->santris);
     }
 
     private function saveToJsonFile()
@@ -76,7 +64,19 @@ class SantriModel
         if (is_array($santriData)) {
             foreach ($santriData as $data) {
                 $role = $this->roleModel->getRoleById($data['role']['roleId']);
-                $santri = new Santri($data['userId'],  $data['username'], $data['password'], $role, $data['santriId'], $data['santriJenisKelamin'], $data['santriTempatTglLahir'], $data['santriAlamat'], $data['santriNamaOrtu'], $data['santriNoTelpOrtu'], $data['santriGajiOrtu']);
+                $santri = new Santri(
+                    $data['userId'],
+                    $data['username'],
+                    $data['password'],
+                    $role,
+                    $data['santriId'],
+                    $data['santriJenisKelamin'],
+                    $data['santriTempatTglLahir'],
+                    $data['santriAlamat'],
+                    $data['santriNamaOrtu'],
+                    $data['santriNoTelpOrtu'],
+                    $data['santriGajiOrtu']
+                );
                 $this->santris[] = $santri;
             }
         }
@@ -108,6 +108,16 @@ class SantriModel
         return null;
     }
 
+    public function getSantriByUsername($username)
+    {
+        foreach ($this->santris as $santri) {
+            if ($santri->username == $username) {
+                return $santri;
+            }
+        }
+        return null;
+    }
+
     public function updateSantri($username, $password, $santriId, $santriJenisKelamin, $santriTempatTglLahir, $santriAlamat, $santriNamaOrtu, $santriNoTelpOrtu, $santriGajiOrtu)
     {
         $santri = $this->getSantriById($santriId);
@@ -120,7 +130,6 @@ class SantriModel
         $santri->santriNamaOrtu = $santriNamaOrtu;
         $santri->santriNoTelpOrtu = $santriNoTelpOrtu;
         $santri->santriGajiOrtu = $santriGajiOrtu;
-        $this->saveToSession();
         $this->saveToJsonFile();
     }
 
@@ -131,7 +140,6 @@ class SantriModel
         if ($index !== false) {
             unset($this->santris[$index]);
             $this->santris = array_values($this->santris);
-            $this->saveToSession();
             $this->saveToJsonFile();
         }
     }

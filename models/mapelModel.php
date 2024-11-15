@@ -9,19 +9,14 @@ class MapelModel
 
     public function __construct()
     {
-
         if (file_exists($this->jsonFilePath)) {
             $this->loadFromJsonFile();
-            $this->nextId = $this->getMaxMapelId() + 1;
-        } elseif (isset($_SESSION['mapels'])) {
-            $this->mapels = unserialize($_SESSION['mapels']);
             $this->nextId = $this->getMaxMapelId() + 1;
         } else {
             $this->initializeDefaultMapel();
             $this->saveToJsonFile();
         }
     }
-
 
     public function initializeDefaultMapel()
     {
@@ -34,15 +29,8 @@ class MapelModel
     {
         $mapel = new Mapel($this->nextId++, $mapelNama, $mapelDeskripsi);
         $this->mapels[] = $mapel;
-        $this->saveToSession();
         $this->saveToJsonFile();
     }
-
-    private function saveToSession()
-    {
-        $_SESSION['mapels'] = serialize($this->mapels);
-    }
-
 
     private function saveToJsonFile()
     {
@@ -88,7 +76,6 @@ class MapelModel
             if ($mapel->mapelId == $mapelId) {
                 $mapel->mapelNama = $mapelNama;
                 $mapel->mapelDeskripsi = $mapelDeskripsi;
-                $this->saveToSession();
                 $this->saveToJsonFile();
                 return true;
             }
@@ -101,8 +88,7 @@ class MapelModel
         foreach ($this->mapels as $key => $mapel) {
             if ($mapel->mapelId == $mapelId) {
                 unset($this->mapels[$key]);
-                $this->mapels = array_values($this->mapels); 
-                $this->saveToSession();
+                $this->mapels = array_values($this->mapels);
                 $this->saveToJsonFile();
                 return true;
             }
@@ -119,7 +105,6 @@ class MapelModel
         }
         return null;
     }
-
 
     private function getMaxMapelId()
     {

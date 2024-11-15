@@ -20,7 +20,7 @@
     {
         "roleId": 4,
         "roleNama": "Bendahara",
-        "roleDeskripsi": "Menginputkan data keuangan",
-        "roleStatus": 1
+        "roleDeskripsi": "Yang menanganin SPP",
+        "roleStatus": "1"
     }
 ]

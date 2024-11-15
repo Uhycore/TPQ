@@ -1,4 +1,3 @@
-<!-- views/items/keuanganInput.php -->
 <!DOCTYPE html>
 <html lang="id">
 
@@ -10,7 +9,7 @@
 </head>
 
 <body class="bg-gray-100">
-
+    <?php include 'views/includes/navbar.php'; ?>
     <div class="container mx-auto p-6">
         <h1 class="text-2xl font-bold mb-6">Input Data Keuangan</h1>
         <form action="index.php?modul=keuangan&fitur=add" method="POST" class="bg-white p-6 rounded-lg shadow-md">

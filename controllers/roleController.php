@@ -4,35 +4,44 @@ require_once 'models/roleModel.php';
 
 class RoleController
 {
-    protected $roleModel;
+    protected $adminController;
 
     public function __construct()
     {
-        $this->roleModel = new RoleModel();
+        $this->adminController = new RoleModel();
     }
 
     public function listRoles()
     {
-        $Roles = $this->roleModel->getAllRoles();
+        $Roles = $this->adminController->getAllRoles();
         include 'views/role/roleList.php';
-        
     }
 
-    public function addRole($roleNama, $roleDeskripsi, $roleStatus)
+    public function addRole()
     {
-        $this->roleModel->addRole($roleNama, $roleDeskripsi, $roleStatus);
-        header('location: index.php?modul=null');
+        $roleNama = $_POST['roleNama'];
+        $roleDeskripsi = $_POST['roleDeskripsi'];
+        $roleStatus = $_POST['roleStatus'];
+
+
+        $this->adminController->addRole($roleNama, $roleDeskripsi, $roleStatus);
+        header('location: index.php?modul=role&&fitur=list');
     }
-    public function editById($roleId)
+    public function editById()
     {
-        $objRoles = $this->roleModel->getRoleById($roleId);
+        $roleId = $_GET['roleId'];
+        $objRoles = $this->adminController->getRoleById($roleId);
         include 'views/role/roleUpdate.php';
     }
 
-    public function updateRole($roleId, $roleNama, $roleDeskripsi, $roleStatus)
+    public function updateRole()
     {
+        $roleId = $_POST['roleId'];
+        $roleNama = $_POST['roleNama'];
+        $roleDeskripsi = $_POST['roleDeskripsi'];
+        $roleStatus = $_POST['roleStatus'];
 
-        $updateResult = $this->roleModel->updateRole($roleId, $roleNama, $roleDeskripsi, $roleStatus);
+        $updateResult = $this->adminController->updateRole($roleId, $roleNama, $roleDeskripsi, $roleStatus);
         if ($updateResult) {
             echo "<script>
                         alert('Data role berhasil diperbarui!');
@@ -47,9 +56,10 @@ class RoleController
         exit;
     }
 
-    public function deleteRole($roleId)
+    public function deleteRole()
     {
-        $result = $this->roleModel->deleteRole($roleId);
+        $roleId = $_POST['roleId'];
+        $result = $this->adminController->deleteRole($roleId);
         if (!$result) {
             throw new Exception('Failed to delete role.');
         } else {
@@ -57,17 +67,17 @@ class RoleController
         }
     }
 
-    public function getListRoleName()
-    {
-        $listRoleName = [];
-        foreach ($this->roleModel->getAllRoles() as $role) {
-            $listRoleName[] = $role->roleNama;
-        }
-        return $listRoleName;
-    }
+    // public function getListRoleName()
+    // {
+    //     $listRoleName = [];
+    //     foreach ($this->adminController->getAllRoles() as $role) {
+    //         $listRoleName[] = $role->roleNama;
+    //     }
+    //     return $listRoleName;
+    // }
 
-    public function getRoleByName($name)
-    {
-        return $this->roleModel->getRoleByName($name);
-    }
+    // public function getRoleByName($name)
+    // {
+    //     return $this->adminController->getRoleByName($name);
+    // }
 }

@@ -54,5 +54,89 @@
                 "nominal": "10000"
             }
         ]
+    },
+    {
+        "keuanganId": 3,
+        "santri": {
+            "userId": 3,
+            "username": "Aril",
+            "password": "1",
+            "role": {
+                "roleId": 1,
+                "roleNama": "Admin",
+                "roleDeskripsi": "Sebagai pengatur semuanya",
+                "roleStatus": 1
+            },
+            "santriId": 1,
+            "santriJenisKelamin": "Laki-laki",
+            "santriTempatTglLahir": "Jakarta",
+            "santriAlamat": "Jl. Raya Jakarta",
+            "santriNamaOrtu": "Aril",
+            "santriNoTelpOrtu": "0123456789",
+            "santriGajiOrtu": "1000000"
+        },
+        "detailKeuangan": [
+            {
+                "detailKeuanganId": 1,
+                "tanggal": "2024-11-28",
+                "nominal": "100"
+            }
+        ]
+    },
+    {
+        "keuanganId": 4,
+        "santri": {
+            "userId": 3,
+            "username": "Asyraril",
+            "password": "1",
+            "role": {
+                "roleId": 3,
+                "roleNama": "Santri",
+                "roleDeskripsi": "Santri\/Orang tua santri yang memiliki akun",
+                "roleStatus": 1
+            },
+            "santriId": 4,
+            "santriJenisKelamin": "Laki-laki",
+            "santriTempatTglLahir": "Jakarta",
+            "santriAlamat": "Jl. Raya Jakarta",
+            "santriNamaOrtu": "Aril",
+            "santriNoTelpOrtu": "0123456789",
+            "santriGajiOrtu": "1000000"
+        },
+        "detailKeuangan": [
+            {
+                "detailKeuanganId": 1,
+                "tanggal": "2024-11-30",
+                "nominal": "100"
+            }
+        ]
+    },
+    {
+        "keuanganId": 5,
+        "santri": {
+            "userId": 3,
+            "username": "Aril Mubin",
+            "password": "1",
+            "role": {
+                "roleId": 3,
+                "roleNama": "Santri",
+                "roleDeskripsi": "Santri\/Orang tua santri yang memiliki akun",
+                "roleStatus": 1
+            },
+            "santriId": 2,
+            "santriJenisKelamin": "Laki-laki",
+            "santriTempatTglLahir": "Jakarta",
+            "santriAlamat": "Jl. Raya Jakarta",
+            "santriNamaOrtu": "Aril",
+            "santriNoTelpOrtu": "0123456789",
+            "santriGajiOrtu": "1000000"
+        },
+        "detailKeuangan": [
+            {
+                "detailKeuanganId": 1,
+                "tanggal": "2024-11-30",
+                "nominal": "1000"
+            }
+        ]
     }
 ]

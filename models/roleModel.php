@@ -9,19 +9,14 @@ class RoleModel
 
     public function __construct()
     {
-
         if (file_exists($this->jsonFilePath)) {
             $this->loadFromJsonFile();
-            $this->nextId = $this->getMaxRoleId() + 1;
-        } elseif (isset($_SESSION['roles'])) {
-            $this->roles = unserialize($_SESSION['roles']);
             $this->nextId = $this->getMaxRoleId() + 1;
         } else {
             $this->initializeDefaultRole();
             $this->saveToJsonFile();
         }
     }
-
 
     public function initializeDefaultRole()
     {
@@ -35,15 +30,8 @@ class RoleModel
     {
         $role = new Role($this->nextId++, $roleNama, $roleDeskripsi, $roleStatus);
         $this->roles[] = $role;
-        $this->saveToSession();
         $this->saveToJsonFile();
     }
-
-    private function saveToSession()
-    {
-        $_SESSION['roles'] = serialize($this->roles);
-    }
-
 
     private function saveToJsonFile()
     {
@@ -91,7 +79,6 @@ class RoleModel
                 $role->roleNama = $roleNama;
                 $role->roleDeskripsi = $roleDeskripsi;
                 $role->roleStatus = $roleStatus;
-                $this->saveToSession();
                 $this->saveToJsonFile();
                 return true;
             }
@@ -104,8 +91,7 @@ class RoleModel
         foreach ($this->roles as $key => $role) {
             if ($role->roleId == $roleId) {
                 unset($this->roles[$key]);
-                $this->roles = array_values($this->roles); 
-                $this->saveToSession();
+                $this->roles = array_values($this->roles);
                 $this->saveToJsonFile();
                 return true;
             }

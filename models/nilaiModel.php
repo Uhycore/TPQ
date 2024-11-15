@@ -10,12 +10,7 @@ class NilaiModel
 
     public function __construct()
     {
-        if (isset($_SESSION['nilai'])) {
-            $this->nilaiNodes = unserialize($_SESSION['nilai']);
-            $this->nextId = $this->getMaxNilaiId() + 1;
-        } else {
-            $this->loadFromJson();
-        }
+        $this->loadFromJson();
     }
 
     public function addNilai($santri, $detailNilaiData)
@@ -30,7 +25,6 @@ class NilaiModel
         }
 
         $this->nilaiNodes[] = $nilaiNode;
-        $this->saveToSession();
         $this->saveToJson();
     }
 
@@ -39,6 +33,7 @@ class NilaiModel
         $jsonData = json_encode($this->nilaiNodes, JSON_PRETTY_PRINT);
         file_put_contents('data/nilaiData.json', $jsonData);
     }
+
     private function loadFromJson()
     {
         $filePath = 'data/nilaiData.json';
@@ -47,7 +42,7 @@ class NilaiModel
             $dataArray = json_decode($jsonData, true);
 
             if ($dataArray) {
-                $dataSantri = new SantriModel(); 
+                $dataSantri = new SantriModel();
 
                 foreach ($dataArray as $data) {
                     $santri = $dataSantri->getSantriById($data['santri']['santriId']);
@@ -68,13 +63,6 @@ class NilaiModel
                 $this->nextId = $this->getMaxNilaiId() + 1;
             }
         }
-    }
-
-
-
-    private function saveToSession()
-    {
-        $_SESSION['nilai'] = serialize($this->nilaiNodes);
     }
 
     public function getAllNilai()

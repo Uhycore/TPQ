@@ -23,9 +23,9 @@ class SantriController
         include 'views/santri/santriList.php';
     }
 
-    public function addSantri($username, $password, $santriJenisKelamin, $santriTempatTglLahir, $santriAlamat, $santriNamaOrtu, $santriNoTelpOrtu, $santriGajiOrtu)
+    public function addSantri($username, $password, $role, $santriJenisKelamin, $santriTempatTglLahir, $santriAlamat, $santriNamaOrtu, $santriNoTelpOrtu, $santriGajiOrtu)
     {
-        $this->santriModel->addSantri($username, $password, $santriJenisKelamin, $santriTempatTglLahir, $santriAlamat, $santriNamaOrtu, $santriNoTelpOrtu, $santriGajiOrtu);
+        $this->santriModel->addSantri($username, $password, $role, $santriJenisKelamin, $santriTempatTglLahir, $santriAlamat, $santriNamaOrtu, $santriNoTelpOrtu, $santriGajiOrtu);
         header('location: index.php?modul=null');
     }
 

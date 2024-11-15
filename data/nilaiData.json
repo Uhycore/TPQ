@@ -79,9 +79,9 @@
             "username": "Aril",
             "password": "1",
             "role": {
-                "roleId": 3,
-                "roleNama": "Santri",
-                "roleDeskripsi": "Santri\/Orang tua santri yang memiliki akun",
+                "roleId": 1,
+                "roleNama": "Admin",
+                "roleDeskripsi": "Sebagai pengatur semuanya",
                 "roleStatus": 1
             },
             "santriId": 1,
@@ -152,9 +152,9 @@
             "username": "Aril",
             "password": "1",
             "role": {
-                "roleId": 3,
-                "roleNama": "Santri",
-                "roleDeskripsi": "Santri\/Orang tua santri yang memiliki akun",
+                "roleId": 1,
+                "roleNama": "Admin",
+                "roleDeskripsi": "Sebagai pengatur semuanya",
                 "roleStatus": 1
             },
             "santriId": 1,
@@ -184,9 +184,9 @@
             "username": "Aril",
             "password": "1",
             "role": {
-                "roleId": 3,
-                "roleNama": "Santri",
-                "roleDeskripsi": "Santri\/Orang tua santri yang memiliki akun",
+                "roleId": 1,
+                "roleNama": "Admin",
+                "roleDeskripsi": "Sebagai pengatur semuanya",
                 "roleStatus": 1
             },
             "santriId": 1,
@@ -244,6 +244,120 @@
                 "mapel": {
                     "mapelId": 1,
                     "mapelNama": "An-nas",
+                    "mapelDeskripsi": "Al-Qur'an"
+                },
+                "nilai": "100"
+            }
+        ]
+    },
+    {
+        "nilaiId": 8,
+        "santri": {
+            "userId": 3,
+            "username": "Mubin",
+            "password": "1",
+            "role": {
+                "roleId": 3,
+                "roleNama": "Santri",
+                "roleDeskripsi": "Santri\/Orang tua santri yang memiliki akun",
+                "roleStatus": 1
+            },
+            "santriId": 3,
+            "santriJenisKelamin": "Laki-laki",
+            "santriTempatTglLahir": "Jakarta",
+            "santriAlamat": "Jl. Raya Jakarta",
+            "santriNamaOrtu": "Aril",
+            "santriNoTelpOrtu": "0123456789",
+            "santriGajiOrtu": "1000000"
+        },
+        "detailNilai": [
+            {
+                "detailNilaiId": 1,
+                "mapel": {
+                    "mapelId": 4,
+                    "mapelNama": "An-naser",
+                    "mapelDeskripsi": "Al-Qur'an"
+                },
+                "nilai": "17"
+            },
+            {
+                "detailNilaiId": 2,
+                "mapel": {
+                    "mapelId": 4,
+                    "mapelNama": "An-naser",
+                    "mapelDeskripsi": "Al-Qur'an"
+                },
+                "nilai": "22"
+            }
+        ]
+    },
+    {
+        "nilaiId": 9,
+        "santri": {
+            "userId": 3,
+            "username": "Mubin",
+            "password": "1",
+            "role": {
+                "roleId": 3,
+                "roleNama": "Santri",
+                "roleDeskripsi": "Santri\/Orang tua santri yang memiliki akun",
+                "roleStatus": 1
+            },
+            "santriId": 3,
+            "santriJenisKelamin": "Laki-laki",
+            "santriTempatTglLahir": "Jakarta",
+            "santriAlamat": "Jl. Raya Jakarta",
+            "santriNamaOrtu": "Aril",
+            "santriNoTelpOrtu": "0123456789",
+            "santriGajiOrtu": "1000000"
+        },
+        "detailNilai": [
+            {
+                "detailNilaiId": 1,
+                "mapel": {
+                    "mapelId": 1,
+                    "mapelNama": "An-nas",
+                    "mapelDeskripsi": "Al-Qur'an"
+                },
+                "nilai": "200"
+            }
+        ]
+    },
+    {
+        "nilaiId": 10,
+        "santri": {
+            "userId": 3,
+            "username": "Mubin",
+            "password": "1",
+            "role": {
+                "roleId": 3,
+                "roleNama": "Santri",
+                "roleDeskripsi": "Santri\/Orang tua santri yang memiliki akun",
+                "roleStatus": 1
+            },
+            "santriId": 3,
+            "santriJenisKelamin": "Laki-laki",
+            "santriTempatTglLahir": "Jakarta",
+            "santriAlamat": "Jl. Raya Jakarta",
+            "santriNamaOrtu": "Aril",
+            "santriNoTelpOrtu": "0123456789",
+            "santriGajiOrtu": "1000000"
+        },
+        "detailNilai": [
+            {
+                "detailNilaiId": 1,
+                "mapel": {
+                    "mapelId": 4,
+                    "mapelNama": "An-naser",
+                    "mapelDeskripsi": "Al-Qur'an"
+                },
+                "nilai": "100"
+            },
+            {
+                "detailNilaiId": 2,
+                "mapel": {
+                    "mapelId": 3,
+                    "mapelNama": "Al-ikhlas",
                     "mapelDeskripsi": "Al-Qur'an"
                 },
                 "nilai": "100"
