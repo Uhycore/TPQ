@@ -2,16 +2,15 @@
 require_once 'controllers/roleController.php';
 require_once 'controllers/adminController.php';
 require_once 'controllers/santriController.php';
+require_once 'controllers/guruController.php';
 require_once 'controllers/mapelController.php';
+require_once 'controllers/nilaiController.php';
+require_once 'controllers/keuanganController.php';
 
 
-require_once 'models/nilaiModel.php';
-require_once 'models/keuanganModel.php';
-
-require_once 'models/mapelModel.php';
 require_once 'models/santriModel.php';
 
-require_once 'models/guruModel.php';
+
 require_once 'models/adminModel.php';
 
 
@@ -23,16 +22,17 @@ $modul = isset($_GET['modul']) ? $_GET['modul'] : null;
 
 $objRoles = new RoleController();
 $objSantri = new SantriController();
-$objMapel = new MapelController();
 $objAdmin = new AdminController();
+$objGuru = new GuruController();
+$objMapel = new MapelController();
+$objNilai = new NilaiController();
+$objKeuangan = new KeuanganController();
 
-$objNilai = new NilaiModel();
-$objKeuangan = new KeuanganModel();
 
-$obj_mapel = new MapelModel();
+
 $obj_santri = new SantriModel();
 
-$obj_guru = new GuruModel();
+
 $obj_admin = new AdminModel();
 
 
@@ -97,15 +97,15 @@ switch ($modul) {
                 include 'views/role/roleInput.php';
                 break;
             case 'add':
-                $objRoles->addRole();
-            case 'delete':
-                $objRoles->deleteRole();
-                break;
+                $objRoles->addRoles();
             case 'edit':
                 $objRoles->editById();
                 break;
             case 'update':
-                $objRoles->updateRole();
+                $objRoles->updateRoles();
+                break;
+            case 'delete':
+                $objRoles->deleteRoles();
                 break;
             default:
                 $objRoles->listRoles();
@@ -125,14 +125,14 @@ switch ($modul) {
             case 'add':
                 $objAdmin->addAdmins();
                 break;
-            case 'delete':
-                $objAdmin->deleteAdmins();
-                break;
             case 'edit':
                 $objAdmin->editById();
                 break;
             case 'update':
                 $objAdmin->updateAdmins();
+                break;
+            case 'delete':
+                $objAdmin->deleteAdmins();
                 break;
             default:
                 $objAdmin->listAdmins();
@@ -151,34 +151,19 @@ switch ($modul) {
                 include 'views/santri/santriInput.php';
                 break;
             case 'add':
-                $username = $_POST['username'];
-                $password = $_POST['password'];
-                $santriJenisKelamin = $_POST['santriJenisKelamin'];
-                $santriTempatTglLahir = $_POST['santriTempatTglLahir'];
-                $santriAlamat = $_POST['santriAlamat'];
-                $santriNamaOrtu = $_POST['santriNamaOrtu'];
-                $santriNoTelpOrtu = $_POST['santriNoTelpOrtu'];
-                $santriGajiOrtu = $_POST['santriGajiOrtu'];
-
-                $objSantri->addSantri($username, $password, 3, $santriJenisKelamin, $santriTempatTglLahir, $santriAlamat, $santriNamaOrtu, $santriNoTelpOrtu, $santriGajiOrtu);
+                $objSantri->addSantri();
                 break;
             case 'edit':
-                $santriId = $_GET['santriId'];
-
-                $objSantri->editById($santriId);
+                $objSantri->editById();
                 break;
             case 'update':
-                $santriId = $_POST['santriId'];
-                $username = $_POST['username'];
-                $password = $_POST['password'];
-                $santriJenisKelamin = $_POST['santriJenisKelamin'];
-                $santriTempatTglLahir = $_POST['santriTempatTglLahir'];
-                $santriAlamat = $_POST['santriAlamat'];
-                $santriNamaOrtu = $_POST['santriNamaOrtu'];
-                $santriNoTelpOrtu = $_POST['santriNoTelpOrtu'];
-                $santriGajiOrtu = $_POST['santriGajiOrtu'];
-
-                $objSantri->updateSantri($username, $password, $santriId, $santriJenisKelamin, $santriTempatTglLahir, $santriAlamat, $santriNamaOrtu, $santriNoTelpOrtu, $santriGajiOrtu);
+                $objSantri->updateSantri();
+                break;
+            case 'delete':
+                $objSantri->deleteSantri();
+                break;
+            default:
+                $objSantri->listSantri();
                 break;
         }
         break;
@@ -187,49 +172,25 @@ switch ($modul) {
 
         switch ($fitur) {
             case 'list':
-                $gurus = $obj_guru->getAllGurus();
-
-                include 'views/guru/guruList.php';
+                $objGuru->listGurus();
                 break;
-
             case 'input':
                 include 'views/guru/guruInput.php';
                 break;
-
             case 'add':
-                $username = $_POST['username'];
-                $password = $_POST['password'];
-                $guruJenisKelamin = $_POST['guruJenisKelamin'];
-                $guruTempatTglLahir = $_POST['guruTempatTglLahir'];
-                $guruKelas = $_POST['guruKelas'];
-                $guruAlamat = $_POST['guruAlamat'];
-                $guruNoTelp = $_POST['guruNoTelp'];
-
-                $guruModel->addGuru($username, $password, 2, $guruJenisKelamin, $guruTempatTglLahir, $guruKelas, $guruAlamat, $guruNoTelp);
-
-
-                header('Location: ?guru=fitur&list');
+                $objGuru->addGurus();
                 break;
-
             case 'edit':
-                $guruId = $_GET['guruId'];
-
-                include 'views/guru/guruEdit.php';
+                $objGuru->editById();
                 break;
-
             case 'update':
-                $guruId = $_POST['guruId'];
-                $username = $_POST['username'];
-                $password = $_POST['password'];
-                $guruJenisKelamin = $_POST['guruJenisKelamin'];
-                $guruTempatTglLahir = $_POST['guruTempatTglLahir'];
-                $guruKelas = $_POST['guruKelas'];
-                $guruAlamat = $_POST['guruAlamat'];
-                $guruNoTelp = $_POST['guruNoTelp'];
-
-                $guruModel->updateGuru($username, $password, $guruId, $guruJenisKelamin, $guruTempatTglLahir, $guruKelas, $guruAlamat, $guruNoTelp);
-
-                header('Location: ?guru=fitur&list');
+                $objGuru->updateGurus();
+                break;
+            case 'delete':
+                $objGuru->deleteGurus();
+                break;
+            default:
+                $objGuru->listGurus();
                 break;
         }
         break;
@@ -239,33 +200,22 @@ switch ($modul) {
 
         switch ($fitur) {
             case 'list':
-                $objMapel->listMapel();
+                $objMapel->listMapels();
                 break;
             case 'input':
                 include 'views/items/mapelInput.php';
                 break;
             case 'add':
-                $mapelNama = $_POST['mapelNama'];
-                $mapelDeskripsi = $_POST['mapelDeskripsi'];
-
-                $objMapel->addMapel($mapelNama, $mapelDeskripsi);
+                $objMapel->addMapels();
                 break;
             case 'edit':
-                $mapelId = $_GET['mapelId'];
-
-                $objMapel->editById($mapelId);
+                $objMapel->editById();
                 break;
             case 'update':
-                $mapelId = $_POST['mapelId'];
-                $mapelNama = $_POST['mapelNama'];
-                $mapelDeskripsi = $_POST['mapelDeskripsi'];
-
-                $objMapel->updateMapel($mapelId, $mapelNama, $mapelDeskripsi);
+                $objMapel->updateMapels();
                 break;
             case 'delete':
-                $mapelId = $_POST['mapelId'];
-
-                $objMapel->deleteMapel($mapelId);
+                $objMapel->deleteMapels();
                 break;
         }
         break;
@@ -273,46 +223,17 @@ switch ($modul) {
         $fitur = isset($_GET['fitur']) ? $_GET['fitur'] : null;
 
         switch ($fitur) {
+            case 'list':
+                $objNilai->listNilais();
+                break;
             case 'input':
-                $santris = $obj_santri->getAllSantris();
-                $mapels = $obj_mapel->getAllmapels();
-
-                include 'views/items/nilaiInput.php';
+                $objNilai->inputNilais();
                 break;
-
             case 'add':
-                $santriId = $_POST['santriId'];
-                $mapelId = $_POST['mapelId'];
-                $nilais = $_POST['nilai'];
-
-                $detail_nilai_data = [];
-                $counter = 1;
-                foreach ($mapelId as $key => $mapel_id) {
-                    $mapel = $obj_mapel->getMapelById($mapel_id);
-
-                    if ($mapel) {
-                        $detailNilaiNode = new DetailNilaiNode($counter++, $mapel, $nilais[$key]);
-                        $detail_nilai_data[] = $detailNilaiNode;
-                    }
-                }
-
-
-                if (!empty($detail_nilai_data)) {
-                    $objNilai->addNilai($santriId, $detail_nilai_data);
-                    header("Location: index.php?modul=nilai");
-                } else {
-                    echo "Detail nilai tidak lengkap!";
-                    exit;
-                }
+                $objNilai->addNilais();
                 break;
-
-
             default:
-                $nilaiNodes = $objNilai->getAllNilai();
-                // echo "<pre>";
-                // print_r($nilaiNodes);
-                // echo "</pre>";
-                include 'views/items/nilaiList.php';
+                $objNilai->listNilais();
                 break;
         }
         break;
@@ -320,41 +241,18 @@ switch ($modul) {
         $fitur = isset($_GET['fitur']) ? $_GET['fitur'] : null;
 
         switch ($fitur) {
+            case 'list':
+                $objKeuangan->listKeuangans();
+                break;
             case 'input':
-                $santris = $obj_santri->getAllSantris();
-                include 'views/items/keuanganInput.php';
+                $objKeuangan->inputKeuangans();
                 break;
-
             case 'add':
-
-                $santriId = $_POST['santriId'];
-                $tanggal = $_POST['tanggal'];
-                $nominal = $_POST['nominal'];
-
-
-                $detailKeuanganData = [];
-                $counter = 1;
-
-                $detailKeuanganNode = new DetailKeuanganNode($counter++, $tanggal, $nominal);
-
-
-                $detailKeuanganData[] = $detailKeuanganNode;
-
-
-
-                $tes = $objKeuangan->addKeuangan($santriId, $detailKeuanganData);
-
-
-                header("Location: index.php?modul=keuangan");
+                $objKeuangan->addKeuangans();
                 break;
-
-
-
-
             default:
-                $keuanganNodes = $objKeuangan->getAllKeuangan();
-
-                include 'views/items/keuanganList.php';
+                $objKeuangan->listKeuangans();
+                break;
         }
         break;
 

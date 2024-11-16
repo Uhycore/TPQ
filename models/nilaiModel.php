@@ -54,7 +54,10 @@ class NilaiModel
                             $detail['mapel']['mapelNama'],
                             $detail['mapel']['mapelDeskripsi']
                         );
-                        $detailNilai = new DetailNilaiNode($detail['detailNilaiId'], $mapelObj, $detail['nilai']);
+                        $detailNilai = new DetailNilaiNode(
+                            $detail['detailNilaiId'],
+                            $mapelObj,
+                            $detail['nilai']);
                         $nilaiNode->detailNilai[] = $detailNilai;
                     }
 

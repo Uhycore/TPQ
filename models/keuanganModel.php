@@ -51,7 +51,11 @@ class KeuanganModel
                     $keuanganNode = new KeuanganNode($data['keuanganId'], $santri);
 
                     foreach ($data['detailKeuangan'] as $detail) {
-                        $detailKeuangan = new DetailKeuanganNode($detail['detailKeuanganId'], $detail['tanggal'], $detail['nominal']);
+                        $detailKeuangan = new DetailKeuanganNode(
+                            $detail['detailKeuanganId'],
+                            $detail['tanggal'],
+                            $detail['nominal']
+                        );
                         $keuanganNode->detailKeuangan[] = $detailKeuangan;
                     }
 

@@ -3,119 +3,7 @@
         "keuanganId": 1,
         "santri": {
             "userId": 3,
-            "username": "Aril",
-            "password": "1",
-            "role": {
-                "roleId": 1,
-                "roleNama": "Admin",
-                "roleDeskripsi": "Sebagai pengatur semuanya",
-                "roleStatus": 1
-            },
-            "santriId": 1,
-            "santriJenisKelamin": "Laki-laki",
-            "santriTempatTglLahir": "Jakarta",
-            "santriAlamat": "Jl. Raya Jakarta",
-            "santriNamaOrtu": "Aril",
-            "santriNoTelpOrtu": "0123456789",
-            "santriGajiOrtu": "1000000"
-        },
-        "detailKeuangan": [
-            {
-                "detailKeuanganId": 1,
-                "tanggal": "2024-11-10",
-                "nominal": "10000"
-            }
-        ]
-    },
-    {
-        "keuanganId": 2,
-        "santri": {
-            "userId": 3,
-            "username": "Aril",
-            "password": "1",
-            "role": {
-                "roleId": 1,
-                "roleNama": "Admin",
-                "roleDeskripsi": "Sebagai pengatur semuanya",
-                "roleStatus": 1
-            },
-            "santriId": 1,
-            "santriJenisKelamin": "Laki-laki",
-            "santriTempatTglLahir": "Jakarta",
-            "santriAlamat": "Jl. Raya Jakarta",
-            "santriNamaOrtu": "Aril",
-            "santriNoTelpOrtu": "0123456789",
-            "santriGajiOrtu": "1000000"
-        },
-        "detailKeuangan": [
-            {
-                "detailKeuanganId": 1,
-                "tanggal": "2024-11-10",
-                "nominal": "10000"
-            }
-        ]
-    },
-    {
-        "keuanganId": 3,
-        "santri": {
-            "userId": 3,
-            "username": "Aril",
-            "password": "1",
-            "role": {
-                "roleId": 1,
-                "roleNama": "Admin",
-                "roleDeskripsi": "Sebagai pengatur semuanya",
-                "roleStatus": 1
-            },
-            "santriId": 1,
-            "santriJenisKelamin": "Laki-laki",
-            "santriTempatTglLahir": "Jakarta",
-            "santriAlamat": "Jl. Raya Jakarta",
-            "santriNamaOrtu": "Aril",
-            "santriNoTelpOrtu": "0123456789",
-            "santriGajiOrtu": "1000000"
-        },
-        "detailKeuangan": [
-            {
-                "detailKeuanganId": 1,
-                "tanggal": "2024-11-28",
-                "nominal": "100"
-            }
-        ]
-    },
-    {
-        "keuanganId": 4,
-        "santri": {
-            "userId": 3,
-            "username": "Asyraril",
-            "password": "1",
-            "role": {
-                "roleId": 3,
-                "roleNama": "Santri",
-                "roleDeskripsi": "Santri\/Orang tua santri yang memiliki akun",
-                "roleStatus": 1
-            },
-            "santriId": 4,
-            "santriJenisKelamin": "Laki-laki",
-            "santriTempatTglLahir": "Jakarta",
-            "santriAlamat": "Jl. Raya Jakarta",
-            "santriNamaOrtu": "Aril",
-            "santriNoTelpOrtu": "0123456789",
-            "santriGajiOrtu": "1000000"
-        },
-        "detailKeuangan": [
-            {
-                "detailKeuanganId": 1,
-                "tanggal": "2024-11-30",
-                "nominal": "100"
-            }
-        ]
-    },
-    {
-        "keuanganId": 5,
-        "santri": {
-            "userId": 3,
-            "username": "Aril Mubin",
+            "username": "Mubin",
             "password": "1",
             "role": {
                 "roleId": 3,
@@ -134,8 +22,46 @@
         "detailKeuangan": [
             {
                 "detailKeuanganId": 1,
-                "tanggal": "2024-11-30",
+                "tanggal": "2024-11-19",
                 "nominal": "1000"
+            },
+            {
+                "detailKeuanganId": 2,
+                "tanggal": "2024-11-13",
+                "nominal": "200"
+            }
+        ]
+    },
+    {
+        "keuanganId": 2,
+        "santri": {
+            "userId": 3,
+            "username": "Mubin",
+            "password": "1",
+            "role": {
+                "roleId": 3,
+                "roleNama": "Santri",
+                "roleDeskripsi": "Santri\/Orang tua santri yang memiliki akun",
+                "roleStatus": 1
+            },
+            "santriId": 2,
+            "santriJenisKelamin": "Laki-laki",
+            "santriTempatTglLahir": "Jakarta",
+            "santriAlamat": "Jl. Raya Jakarta",
+            "santriNamaOrtu": "Aril",
+            "santriNoTelpOrtu": "0123456789",
+            "santriGajiOrtu": "1000000"
+        },
+        "detailKeuangan": [
+            {
+                "detailKeuanganId": 1,
+                "tanggal": "2024-11-06",
+                "nominal": "100000"
+            },
+            {
+                "detailKeuanganId": 2,
+                "tanggal": "2024-11-15",
+                "nominal": "3333"
             }
         ]
     }

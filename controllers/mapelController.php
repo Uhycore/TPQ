@@ -1,5 +1,4 @@
 <?php
-
 require_once 'models/mapelModel.php';
 
 class MapelController
@@ -11,63 +10,83 @@ class MapelController
         $this->mapelModel = new MapelModel();
     }
 
-    public function listMapel()
+    public function listMapels()
     {
-        $Mapels = $this->mapelModel->getAllmapels();
-        include 'views/items/mapelList.php';
-        
+        try {
+            $Mapels = $this->mapelModel->getAllmapel();
+            include 'views/items/mapelList.php';
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
     }
 
-    public function addMapel($mapelNama, $mapelDeskripsi)
+    public function addMapels()
     {
-        $this->mapelModel->addMapel($mapelNama, $mapelDeskripsi);
-        header('location: index.php?modul=mapel&fitur=list');
-    }
-    public function editById($mapelId)
-    {
-        $objMapels = $this->mapelModel->getMapelById($mapelId);
-        include 'views/items/mapelUpdate.php';
-    }
+        try {
+            $mapelNama = $_POST['mapelNama'];
+            $mapelDeskripsi = $_POST['mapelDeskripsi'];
+            $this->mapelModel->addMapel($mapelNama, $mapelDeskripsi);
 
-    public function updateMapel($mapelId, $mapelNama, $mapelDeskripsi)
-    {
-
-        $updateResult = $this->mapelModel->updateMapel($mapelId, $mapelNama, $mapelDeskripsi);
-        if ($updateResult) {
             echo "<script>
-                        alert('Data role berhasil diperbarui!');
+                    alert('Data mapel berhasil ditambahkan!');
+                    window.location.href = 'index.php?modul=mapel&fitur=list';
+                 </script>";
+            header('location: index.php?modul=mapel&fitur=list');
+        } catch (Exception $e) {
+            echo "<script>
+                    alert('Gagal menambahkan data mapel. Error: " . $e->getMessage() . "');
+                    window.history.back();
+                 </script>";
+        }
+    }
+
+    public function editById()
+    {
+        try {
+            $mapelId = $_GET['mapelId'];
+            $this->mapelModel->getMapelById($mapelId);
+
+            include 'views/items/mapelUpdate.php';
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
+    public function updateMapels()
+    {
+        try {
+            $mapelId = $_POST['mapelId'];
+            $mapelNama = $_POST['mapelNama'];
+            $mapelDeskripsi = $_POST['mapelDeskripsi'];
+            $this->mapelModel->updateMapel($mapelId, $mapelNama, $mapelDeskripsi);
+            echo "<script>
+                        alert('Data mapel berhasil diperbarui!');
                         window.location.href = 'index.php?modul=mapel&fitur=list'; 
                       </script>";
-        } else {
+        } catch (Exception $e) {
             echo "<script>
-                        alert('Gagal memperbarui data role. Silakan coba lagi.');
-                        window.location.href = 'index.php?modul=mapel&fitur=edit&mapelId={$mapelId}'; 
-                      </script>";
+                    alert('Gagal memperbarui data mapel. Error: " . $e->getMessage() . "');
+                    window.location.href = 'index.php?modul=mapel&fitur=edit&mapelId={$mapelId}'; 
+                  </script>";
         }
         exit;
     }
 
-    public function deleteMapel($mapelId)
+    public function deleteMapels()
     {
-        $result = $this->mapelModel->deleteMapel($mapelId);
-        if (!$result) {
-            throw new Exception('Failed to delete role.');
-        } else {
-            header('location: index.php?modul=mapel&fitur=list');
-        }
-    }
+        try {
+            $mapelId = $_POST['mapelId'];
+            $this->mapelModel->deleteMapel($mapelId);
 
-    public function getListMapelNama()
-    {
-        $listRoleName = [];
-        foreach ($this->mapelModel->getAllmapels() as $role) {
-            $listRoleName[] = $role->mapelNama;
+            echo "<script>
+                    alert('Data mapel berhasil dihapus!');
+                    window.location.href = 'index.php?modul=mapel&fitur=list';
+                 </script>";
+        } catch (Exception $e) {
+            echo "<script>
+                    alert('Gagal menghapus data mapel. Error: " . $e->getMessage() . "');
+                    window.location.href = 'index.php?modul=mapel&fitur=list';
+                 </script>";
         }
-        return $listRoleName;
-    }
-
-    public function getMapelByNama($mapelNama)
-    {
-        return $this->mapelModel->getMapelByNama($mapelNama);
     }
 }

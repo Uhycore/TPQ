@@ -4,78 +4,100 @@ require_once 'models/adminModel.php';
 
 class AdminController
 {
-    protected $adminController;
+    private $adminModel;
 
     public function __construct()
     {
-        $this->adminController = new AdminModel();
+        $this->adminModel = new AdminModel();
     }
 
     public function listAdmins()
     {
-        $admins = $this->adminController->getAllAdmins();
-        include 'views/admin/adminList.php';
+        try {
+            $admins = $this->adminModel->getAllAdmins();
+            include 'views/admin/adminList.php';
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
     }
 
     public function addAdmins()
     {
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        $jenisKelamin =  $_POST['jenisKelamin'];
-        $alamat = $_POST['alamat'];
-        $noTelp = $_POST['noTelp'];
+        try {
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+            $jenisKelamin = $_POST['jenisKelamin'];
+            $alamat = $_POST['alamat'];
+            $noTelp = $_POST['noTelp'];
 
+            $this->adminModel->addAdmin($username, $password, 1, $jenisKelamin, $alamat, $noTelp);
 
-        $this->adminController->addAdmin($username, $password, 1, $jenisKelamin, $alamat, $noTelp);
-        header("Location: index.php?modul=admin&fitur=list");
+            echo "<script>
+                    alert('Data admin berhasil ditambahkan!');
+                    window.location.href = 'index.php?modul=admin&fitur=list'; 
+                 </script>";
+        } catch (Exception $e) {
+            echo "<script>
+                    alert('Gagal menambahkan data role. Error: " . $e->getMessage() . "');
+                    window.history.back();
+                 </script>";
+        }
+        exit;
     }
+
     public function editById()
     {
-        $adminId = $_GET['adminId'];
-        $objAdmin = $this->adminController->getAdminById($adminId);
-        include 'views/admin/adminUpdate.php';
+        try {
+            $adminId = $_GET['adminId'];
+            $objAdmin = $this->adminModel->getAdminById($adminId);
+
+            include 'views/admin/adminUpdate.php';
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
     }
 
     public function updateAdmins()
     {
-        $adminId = $_POST['adminId'];
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        $jenisKelamin =  $_POST['jenisKelamin'];
-        $alamat = $_POST['alamat'];
-        $noTelp = $_POST['noTelp'];
+        try {
+            $adminId = $_POST['adminId'];
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+            $jenisKelamin = $_POST['jenisKelamin'];
+            $alamat = $_POST['alamat'];
+            $noTelp = $_POST['noTelp'];
 
-        $updateResult = $this->adminController->updateAdmin($adminId, $username, $password, $jenisKelamin, $alamat, $noTelp);
-        if ($updateResult) {
+            $this->adminModel->updateAdmin($adminId, $username, $password, $jenisKelamin, $alamat, $noTelp);
+
             echo "<script>
-                        alert('Data role berhasil diperbarui!');
-                        window.location.href = 'index.php?modul=admin&fitur=list'; 
-                      </script>";
-        } else {
+                    alert('Data admin berhasil diperbarui!');
+                    window.location.href = 'index.php?modul=admin&fitur=list'; 
+                </script>";
+        } catch (Exception $e) {
             echo "<script>
-                        alert('Gagal memperbarui data role. Silakan coba lagi.');
-                        window.location.href = 'index.php?modul=admin&fitur=edit&adminId={$adminId}'; 
-                      </script>";
+                    alert('Gagal memperbarui data role. Error: " . $e->getMessage() . "');
+                    window.location.href = 'index.php?modul=admin&fitur=edit&adminId={$adminId}'; 
+                </script>";
         }
         exit;
     }
 
     public function deleteAdmins()
     {
-        $adminId = $_POST['adminId'];
-        $deleteResult = $this->adminController->deleteAdmin($adminId);
+        try {
+            $adminId = $_POST['adminId'];
+            $this->adminModel->deleteAdmin($adminId);
 
+            echo "<script>
+                    alert('Data admin berhasil dihapus!');
+                    window.location.href = 'index.php?modul=admin&fitur=list'; 
+                </script>";
 
-        if (!$deleteResult) {
-            throw new Exception('Failed to delete role.');
-        } else {
-            header('location: index.php?modul=admin&fitur=list');
+            exit;
+        } catch (Exception $e) {
+
+            echo "Gagal menghapus admin: " . $e->getMessage();
         }
-
-
-
-        header('location: index.php?modul=admin&fitur=list');
-
         exit;
     }
 }

@@ -55,7 +55,7 @@ class MapelModel
         }
     }
 
-    public function getAllmapels()
+    public function getAllmapel()
     {
         return $this->mapels;
     }

@@ -58,7 +58,7 @@
                     </div>
 
                     <!-- Submit Button -->
-                    <button type="submit" class="w-full sm:w-32 bg-green-600 text-white py-2 px-4 rounded-md text-sm font-semibold transition duration-500 hover:bg-green-400 ">
+                    <button type="submit" class="w-full sm:w-auto bg-green-600 text-white py-2 px-4 rounded-md text-sm font-semibold transition duration-500 hover:bg-green-400 ">
                         Masuk
                     </button>
 

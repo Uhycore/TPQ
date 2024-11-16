@@ -42,8 +42,8 @@
 
                     <!-- Jenis Kelamin -->
                     <div>
-                        <label for="jenisKelamin" class="block text-gray-600 text-sm font-semibold mb-2">Jenis Kelamin:</label>
-                        <select id="jenisKelamin" name="jenisKelamin" class="shadow border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 ease-in-out hover:shadow-md" required>
+                        <label for="santriJenisKelamin" class="block text-gray-600 text-sm font-semibold mb-2">Jenis Kelamin:</label>
+                        <select id="santriJenisKelamin" name="santriJenisKelamin" class="shadow border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 ease-in-out hover:shadow-md" required>
                             <option value="Laki-laki" <?php echo (isset($objSantri->jenisKelamin) && $objSantri->jenisKelamin == 'Laki-laki') ? 'selected' : ''; ?>>Laki-laki</option>
                             <option value="Perempuan" <?php echo (isset($objSantri->jenisKelamin) && $objSantri->jenisKelamin == 'Perempuan') ? 'selected' : ''; ?>>Perempuan</option>
                         </select>

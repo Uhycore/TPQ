@@ -1,4 +1,3 @@
-<!-- views/items/keuanganList.php -->
 <!DOCTYPE html>
 <html lang="id">
 

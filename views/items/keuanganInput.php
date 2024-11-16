@@ -5,11 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Input Keuangan</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-gray-100">
+
     <?php include 'views/includes/navbar.php'; ?>
+
     <div class="container mx-auto p-6">
         <h1 class="text-2xl font-bold mb-6">Input Data Keuangan</h1>
         <form action="index.php?modul=keuangan&fitur=add" method="POST" class="bg-white p-6 rounded-lg shadow-md">
@@ -27,11 +29,11 @@
                 <div id="detailKeuangan">
                     <div class="mb-2">
                         <label for="tanggal" class="block text-sm font-medium text-gray-700">Tanggal</label>
-                        <input type="date" name="tanggal" class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-md" required>
+                        <input type="date" name="tanggal[]" class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-md" required>
                     </div>
                     <div class="mb-2">
                         <label for="nominal" class="block text-sm font-medium text-gray-700">Nominal</label>
-                        <input type="number" name="nominal" class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-md" required>
+                        <input type="number" name="nominal[]" class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-md" required>
                     </div>
                 </div>
                 <button type="button" onclick="addDetail()" class="mt-2 text-blue-500 hover:underline">Tambah Detail</button>
@@ -42,6 +44,7 @@
                 <a href="index.php?modul=keuangan" class="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-700 ml-4">Kembali</a>
             </div>
         </form>
+
     </div>
 
     <script>
@@ -50,10 +53,10 @@
             const newDetail = document.createElement('div');
             newDetail.classList.add('mb-2');
             newDetail.innerHTML = `
-                <label for="tanggal" class="block text-sm font-medium text-gray-700">Tanggal</label>
-                <input type="date" name="tanggal${detailKeuanganDiv.children.length + 1}" class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-md" required>
-                <label for="nominal" class="block text-sm font-medium text-gray-700">Nominal</label>
-                <input type="number" name="nominal${detailKeuanganDiv.children.length + 1}" class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-md" required>
+                <label class="block text-sm font-medium text-gray-700">Tanggal</label>
+                <input type="date" name="tanggal[]" class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-md" required>
+                <label class="block text-sm font-medium text-gray-700">Nominal</label>
+                <input type="number" name="nominal[]" class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-md" required>
             `;
             detailKeuanganDiv.appendChild(newDetail);
         }

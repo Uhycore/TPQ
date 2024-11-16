@@ -1,7 +1,7 @@
 <?php
 require_once 'config/santriNode.php';
 
-class SantriModel
+class SantriModel 
 {
     private $santris = [];
     private $nextIdSantri = 1;
@@ -23,8 +23,7 @@ class SantriModel
 
     public function initializeDefaultUser()
     {
-        $this->addSantri('Aril', '1', 1,  'Laki-laki', 'Jakarta', 'Jl. Raya Jakarta', 'Aril', '0123456789', '1000000');
-        $this->addSantri('Aril Mubin', 3, '1',  'Laki-laki', 'Jakarta', 'Jl. Raya Jakarta', 'Aril', '0123456789', '1000000');
+        $this->addSantri('Arilsantri', '1', 3,  'Laki-laki', 'Jakarta', 'Jl. Raya Jakarta', 'Aril', '0123456789', '1000000');
         $this->addSantri('Mubin', '1', 3,  'Laki-laki', 'Jakarta', 'Jl. Raya Jakarta', 'Aril', '0123456789', '1000000');
         $this->addSantri('Asyraril', '1', 3, 'Laki-laki', 'Jakarta', 'Jl. Raya Jakarta', 'Aril', '0123456789', '1000000');
     }
@@ -82,7 +81,7 @@ class SantriModel
         }
     }
 
-    public function getAllSantris()
+    public function getAllSantri()
     {
         return $this->santris;
     }
