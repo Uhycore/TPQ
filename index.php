@@ -7,11 +7,9 @@ require_once 'controllers/mapelController.php';
 require_once 'controllers/nilaiController.php';
 require_once 'controllers/keuanganController.php';
 
+require_once 'controllers/loginController.php';
 
-require_once 'models/santriModel.php';
 
-
-require_once 'models/adminModel.php';
 
 
 
@@ -28,63 +26,18 @@ $objMapel = new MapelController();
 $objNilai = new NilaiController();
 $objKeuangan = new KeuanganController();
 
+$objLogin = new loginController();
 
 
-$obj_santri = new SantriModel();
-
-
-$obj_admin = new AdminModel();
 
 
 
 switch ($modul) {
     case 'login':
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $username = htmlspecialchars($_POST['username']);
-            $password = htmlspecialchars($_POST['password']);
-
-            $santri = $obj_santri->getSantriByUsername($username);
-            $guru = $obj_guru->getGuruByUsername($username);
-            $admin = $obj_admin->getAdminByUsername($username);
-
-            if ($santri) {
-                if ($santri->password == $password && $santri->role->roleId == 3) {
-                    $_SESSION['username_login'] = $santri;
-                    header("Location: index.php?modul=null");
-                    exit();
-                } else {
-                    $error = "Password atau role tidak sesuai.";
-                }
-            } elseif ($guru) {
-                if ($guru->password == $password && $guru->role->roleId == 2) {
-                    $_SESSION['username_login'] = $guru;
-                    header("Location: index.php?modul=null");
-                    exit();
-                } else {
-                    $error = "Password atau role tidak sesuai.";
-                }
-                $error = "Username tidak ditemukan.";
-            } elseif ($admin) {
-                if ($admin->password == $password && $admin->role->roleId == 1) {
-                    $_SESSION['username_login'] = $admin;
-                    header("Location: index.php?modul=null");
-                    exit();
-                } else {
-                    $error = "Password atau role tidak sesuai.";
-                }
-                $error = "Username tidak ditemukan.";
-            } else {
-                $error = "Username tidak ditemukan.";
-            }
-
-            include 'views/items/login.php';
-        }
+        $objLogin->login();
         break;
-
-
     case 'logout':
-        unset($_SESSION['username_login']);
-        include 'views/items/login.php';
+        $objLogin->logout();
         break;
     case 'role':
         $fitur = isset($_GET['fitur']) ? $_GET['fitur'] : null;
@@ -258,16 +211,7 @@ switch ($modul) {
 
 
     default:
-        if (isset($_SESSION['username_login']) && $_SESSION['username_login']->role->roleId == 3) {
-            include 'views/santri/santriDashboard.php';
-            break;
-        } else if (isset($_SESSION['username_login']) && $_SESSION['username_login']->role->roleId == 2) {
-            include 'views/role/roleDashboard.php';
-            break;
-        } else if (isset($_SESSION['username_login']) && $_SESSION['username_login']->role->roleId == 1) {
-            include 'views/role/roleDashboard.php';
-            break;
-        }
-        include 'views/items/login.php';
+        $objLogin->checkLogin();
+        
         break;
 }

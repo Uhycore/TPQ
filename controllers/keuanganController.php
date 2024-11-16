@@ -41,7 +41,6 @@ class KeuanganController
 
             $detailKeuanganData = [];
 
-            // Assuming $tanggal and $nominal are arrays with the same length
             foreach ($tanggal as $key => $tgl) {
                 $detailKeuanganNode = new DetailKeuanganNode($key + 1, $tgl, $nominal[$key]);
                 $detailKeuanganData[] = $detailKeuanganNode;
